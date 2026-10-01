@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>黃名帝國｜博物館入口測試</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#090909;color:#f4ead5;font-family:Georgia,"Noto Serif TC","Times New Roman",serif}
+body{background:#000}
+.scene{position:relative;width:100vw;height:100vh;overflow:hidden;background:#111}
+.photo{position:absolute;inset:0;background-image:url("https://upload.wikimedia.org/wikipedia/commons/a/aa/London_-_Great_Russell_Street_-_British_Museum_1823_by_Robert_Smirke_-_View_NW_on_Neo-Classical_Entrance.jpg");background-size:cover;background-position:center 53%;filter:saturate(.9) contrast(1.03);transform:scale(1.03)}
+.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.46),transparent 24%,transparent 55%,rgba(0,0,0,.78)),linear-gradient(90deg,rgba(0,0,0,.28),transparent 40%,rgba(0,0,0,.24))}
+.vignette{position:absolute;inset:0;box-shadow:inset 0 0 180px rgba(0,0,0,.75);pointer-events:none}
+.top{position:absolute;top:0;left:0;right:0;padding:26px 34px;display:flex;justify-content:space-between;align-items:flex-start;z-index:5}
+.brand{letter-spacing:.14em;font-size:13px;text-transform:uppercase;color:#e6cf8b}.brand b{display:block;font-size:21px;letter-spacing:.04em;color:#fff8e7;margin-top:6px}
+.coords{font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:#e9dfc7;text-align:right;background:rgba(0,0,0,.34);padding:9px 11px;border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(6px)}
+.hero{position:absolute;left:50%;top:12%;transform:translateX(-50%);text-align:center;z-index:4;width:min(90vw,760px);text-shadow:0 3px 22px #000}
+.kicker{font-size:13px;letter-spacing:.32em;color:#e3cd87;margin-bottom:13px}
+h1{margin:0;font-size:clamp(30px,5vw,66px);font-weight:400;letter-spacing:.06em}
+.sub{margin-top:11px;font-size:clamp(13px,1.7vw,18px);color:#eee5d7}
+.entrance{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);width:min(260px,26vw);aspect-ratio:1/1.18;border:0;background:transparent;cursor:pointer;z-index:10}
+.entrance .glow{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);width:62%;height:68%;border-radius:50%;background:radial-gradient(ellipse,rgba(245,218,138,.42) 0,rgba(245,218,138,.11) 38%,transparent 73%);animation:pulse 2.3s ease-in-out infinite}
+.entrance .frame{position:absolute;inset:20% 18% 4%;border:2px solid rgba(245,219,145,.8);box-shadow:0 0 24px rgba(245,219,145,.5),inset 0 0 25px rgba(245,219,145,.1);opacity:.8}
+.entrance .label{position:absolute;left:50%;bottom:-5%;transform:translateX(-50%);white-space:nowrap;padding:12px 20px;border:1px solid rgba(245,219,145,.62);background:rgba(10,8,5,.74);backdrop-filter:blur(8px);font-size:14px;letter-spacing:.16em;color:#f6e6b2;transition:.2s}
+.entrance:hover .label{background:rgba(34,27,14,.88);box-shadow:0 0 30px rgba(245,219,145,.2);transform:translateX(-50%) translateY(-2px)}
+.hint{position:absolute;left:50%;bottom:16%;transform:translateX(-50%);z-index:4;text-align:center;font-size:13px;color:#eadfce;opacity:.88}
+.hint span{display:inline-block;margin-top:7px;padding:4px 8px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.28)}
+.bottom{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:18px 24px;display:flex;justify-content:space-between;align-items:end;gap:16px}
+.location{font-size:12px;letter-spacing:.1em;color:#eee4d2}.location strong{display:block;font-size:15px;letter-spacing:.04em;margin-bottom:4px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{appearance:none;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.42);color:#f4ead5;padding:10px 13px;font:12px Georgia,serif;cursor:pointer;text-decoration:none;backdrop-filter:blur(8px)}
+.btn:hover{border-color:#e6cf8b;color:#ffe9ad}
+.credit{position:absolute;left:50%;transform:translateX(-50%);bottom:8px;font-size:10px;color:rgba(255,255,255,.55);z-index:6}
+.door{position:fixed;inset:0;background:rgba(2,2,2,0);pointer-events:none;z-index:30;transition:background .65s ease}
+.opening .door{background:rgba(0,0,0,.94)}
+@keyframes pulse{0%,100%{opacity:.45;transform:translate(-50%,-50%) scale(.96)}50%{opacity:.9;transform:translate(-50%,-50%) scale(1.05)}}
+@media(max-width:700px){
+ .top{padding:18px}.coords{display:none}.hero{top:14%}
+ .entrance{width:48vw;top:56%}.hint{bottom:18%}
+ .bottom{padding:14px;align-items:start;flex-direction:column}.tools{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="scene" id="scene">
+  <div class="photo"></div><div class="vignette"></div>
+  <div class="top">
+    <div class="brand">Wongming Empire Portal<b>博物館入口測試</b></div>
+    <div class="coords">51.5194° N<br>0.1269° W<br>Great Russell Street, London</div>
+  </div>
+  <div class="hero">
+    <div class="kicker">A REAL-WORLD BUILDING AS A VIRTUAL GATE</div>
+    <h1>大英博物館</h1>
+    <div class="sub">把真實世界的建築，作為黃名帝國的虛擬入口</div>
+  </div>
+  <button class="entrance" id="enter" aria-label="進入黃名帝國">
+    <div class="glow"></div><div class="frame"></div><div class="label">進入黃名帝國　›</div>
+  </button>
+  <div class="hint">將滑鼠移到正門中央<br><span>點擊入口即可進入</span></div>
+  <div class="bottom">
+    <div class="location"><strong>THE BRITISH MUSEUM</strong>Great Russell Street · London · United Kingdom</div>
+    <div class="tools">
+      <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=51.5194,-0.1269&heading=180&pitch=0&fov=80">開啟 Google 街景</a>
+      <a class="btn" target="_blank" rel="noopener" href="https://www.wongmingempire.com/bbswm/forum.php?mod=forumdisplay&fid=195">直接進入 fid=195</a>
+    </div>
+  </div>
+  <div class="credit">British Museum entrance image: Wikimedia Commons · The image is shown for this technical entrance prototype.</div>
+</div>
+<div class="door"></div>
+<script>
+const target="https://www.wongmingempire.com/bbswm/forum.php?mod=forumdisplay&fid=195";
+document.getElementById("enter").addEventListener("click",()=>{document.body.classList.add("opening");setTimeout(()=>location.href=target,650)});
+</script>
+</body>
+</html>
