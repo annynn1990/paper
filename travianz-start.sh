@@ -23,7 +23,10 @@ echo "Starting local MariaDB..."
 /usr/sbin/mariadbd --user=mysql --datadir=/var/lib/mysql --bind-address=127.0.0.1 >/var/log/mariadb.log 2>&1 &
 ready=0
 for _ in $(seq 1 60); do
-  if mariadb-admin ping --silent >/dev/null 2>&1; then
+  # Use the explicit Unix socket and an authenticated SQL query. The generic
+  # mariadb-admin ping may report failure under container defaults even when
+  # the server is already listening, which caused a false startup failure.
+  if mariadb --protocol=socket --socket=/run/mysqld/mysqld.sock -uroot -e "SELECT 1" >/dev/null 2>&1; then
     ready=1
     break
   fi
@@ -31,12 +34,12 @@ for _ in $(seq 1 60); do
 done
 
 if [[ "$ready" != "1" ]]; then
-  echo "MariaDB failed to start; recent log follows:"
+  echo "MariaDB did not become query-ready; recent log follows:"
   tail -100 /var/log/mariadb.log || true
   exit 1
 fi
 
-mariadb -uroot <<SQL
+mariadb --protocol=socket --socket=/run/mysqld/mysqld.sock -uroot <<SQL
 CREATE DATABASE IF NOT EXISTS $DB_NAME CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';
 ALTER USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';
