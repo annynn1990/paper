@@ -40,4 +40,4 @@ RUN printf '*/5 * * * * www-data cd /var/www/html && /usr/local/bin/php /var/www
     && chmod 0644 /etc/cron.d/travianz
 
 EXPOSE 10000
-CMD ["bash", "-lc", "cron && exec apache2-foreground"]
+CMD ["bash", "-lc", "printf 'MARIADB_ROOT_PASSWORD=%s\\nMARIADB_DATABASE=%s\\nMARIADB_USER=%s\\nMARIADB_PASSWORD=%s\\nMYSQL_ROOT_PASSWORD=%s\\nMYSQL_DATABASE=%s\\nMYSQL_USER=%s\\nMYSQL_PASSWORD=%s\\nDB_HOST=%s\\nDB_PORT=%s\\n' \"$MARIADB_ROOT_PASSWORD\" \"$MARIADB_DATABASE\" \"$MARIADB_USER\" \"$MARIADB_PASSWORD\" \"$MARIADB_ROOT_PASSWORD\" \"$MARIADB_DATABASE\" \"$MARIADB_USER\" \"$MARIADB_PASSWORD\" \"$DB_HOST\" \"$DB_PORT\" > /var/www/html/.env && chown www-data:www-data /var/www/html/.env && cron && exec apache2-foreground"]
