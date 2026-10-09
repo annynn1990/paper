@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     ca-certificates \
     cron \
+    mariadb-server \
     && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -39,5 +40,8 @@ RUN sed -ri 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf \
 RUN printf '*/5 * * * * www-data cd /var/www/html && /usr/local/bin/php /var/www/html/cron.php >> /var/log/travianz-cron.log 2>&1\n' > /etc/cron.d/travianz \
     && chmod 0644 /etc/cron.d/travianz
 
+COPY travianz-start.sh /usr/local/bin/travianz-start.sh
+RUN chmod 0755 /usr/local/bin/travianz-start.sh
+
 EXPOSE 10000
-CMD ["bash", "-lc", "printf 'MARIADB_ROOT_PASSWORD=%s\\nMARIADB_DATABASE=%s\\nMARIADB_USER=%s\\nMARIADB_PASSWORD=%s\\nMYSQL_ROOT_PASSWORD=%s\\nMYSQL_DATABASE=%s\\nMYSQL_USER=%s\\nMYSQL_PASSWORD=%s\\nDB_HOST=%s\\nDB_PORT=%s\\n' \"$MARIADB_ROOT_PASSWORD\" \"$MARIADB_DATABASE\" \"$MARIADB_USER\" \"$MARIADB_PASSWORD\" \"$MARIADB_ROOT_PASSWORD\" \"$MARIADB_DATABASE\" \"$MARIADB_USER\" \"$MARIADB_PASSWORD\" \"$DB_HOST\" \"$DB_PORT\" > /var/www/html/.env && chown www-data:www-data /var/www/html/.env && cron && exec apache2-foreground"]
+CMD ["bash", "/usr/local/bin/travianz-start.sh"]
